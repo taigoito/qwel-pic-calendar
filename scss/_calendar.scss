@@ -15,6 +15,7 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
   }
 
   &__mode {
+    margin-right: 1.5rem;
     margin-bottom: 0.75rem;
     text-align: right;
 
@@ -72,7 +73,7 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
 
     th, td {
       width: $calendarUnit;
-      height: calc(#{$calendarUnit} * 3 / 4);
+      //height: calc(#{$calendarUnit} * 3 / 4);
       border-right: 1px solid #999999;
       text-align: center;
 
@@ -83,8 +84,13 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
   }
 
   &__cell {
+    height: calc(#{$calendarUnit} * 3 / 4);
     font-size: min(3.6vw, 87.5%);
     vertical-align: baseline;
+
+    @media (max-width: 599.9px) {
+      height: 10.5svh;
+    }
 
     &.--done {
       opacity: 0.7;
@@ -158,5 +164,11 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
         opacity: 0.7;
       }
     }
+  }
+
+  &__description {
+    padding: 2.25rem;
+    font-size: min(3.6vw, 16px);
+    text-align: justify;
   }
 }

@@ -67,6 +67,7 @@ button, input, select, textarea {
   background: rgba(128, 255, 255, 0.3);
 }
 .calendar__mode {
+  margin-right: 1.5rem;
   margin-bottom: 0.75rem;
   text-align: right;
 }
@@ -115,7 +116,6 @@ button, input, select, textarea {
 }
 .calendar__view th, .calendar__view td {
   width: clamp(3rem, 12vw, 6rem);
-  height: calc(clamp(3rem, 12vw, 6rem) * 3 / 4);
   border-right: 1px solid #999999;
   text-align: center;
 }
@@ -123,8 +123,14 @@ button, input, select, textarea {
   border-left: 1px solid #999999;
 }
 .calendar__cell {
+  height: calc(clamp(3rem, 12vw, 6rem) * 3 / 4);
   font-size: min(3.6vw, 87.5%);
   vertical-align: baseline;
+}
+@media (max-width: 599.9px) {
+  .calendar__cell {
+    height: 10.5svh;
+  }
 }
 .calendar__cell.--done {
   opacity: 0.7;
@@ -178,4 +184,9 @@ button, input, select, textarea {
 }
 .calendar__save:not(.--inactive):hover {
   opacity: 0.7;
+}
+.calendar__description {
+  padding: 2.25rem;
+  font-size: min(3.6vw, 16px);
+  text-align: justify;
 }
