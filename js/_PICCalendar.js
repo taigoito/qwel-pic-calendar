@@ -117,7 +117,7 @@ export default class PICCalendar extends Calendar {
   _initPIC() {
     this._getData();
     this._setPIC(true);
-    //this._saveData();
+    this._saveData();
   }
 
   // 最終保存日と最終担当者を取得

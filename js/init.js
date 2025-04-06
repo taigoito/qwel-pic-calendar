@@ -7,5 +7,5 @@
 
 import PICCalendar from './_PICCalendar.js';
 new PICCalendar({
-  url: 'https://test2.qwel.design/'
+  url: 'https://discoverechizen.com/judo/'
 });
