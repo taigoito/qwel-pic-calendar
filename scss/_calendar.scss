@@ -15,11 +15,17 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
   }
 
   &__mode {
+    margin-bottom: 0.75rem;
     text-align: right;
 
-    select {
-      display: inline-block;
-      margin: 0.75rem;
+    label {
+      font-size: 0.875rem;
+    }
+
+    input {
+      width: 6rem;
+      height: 1.5rem;
+      margin-left: 0.5rem;
     }
   }
 
@@ -89,14 +95,10 @@ $calendarUnit: clamp(#{$calendarMin}, 12vw, #{$calendarMax});
     }
     
     &[data-state="0"] {
-      background: rgba(255, 128, 128, .5);
-    }
-  
-    &[data-state="1"] {
       background: rgba(255, 255, 128, .5);
     }
   
-    &[data-state="2"] {
+    &[data-state="1"] {
       background: rgba(128, 255, 128, .5);
     }
   }

@@ -84,6 +84,10 @@ export default class Calendar {
     // 前月
     this._prev.addEventListener('click', (event) => {
       event.preventDefault();
+
+      // 2025年2月以前に遡ることは不可
+      if (this._prev.classList.contains('.--inactive')) return;
+
       this.baseDate.setMonth(this.baseDate.getMonth() - 1);
       this.year = this.baseDate.getFullYear();
       this.month = this.baseDate.getMonth();
@@ -115,6 +119,13 @@ export default class Calendar {
       const prevMonth = `${(month + this._months.length - 1) % this._months.length}`;
       const prevYear = prevMonth < 11 ? year : year - 1;
       this._prevText.textContent = `${prevYear}${joint}${this._months[prevMonth]}`;
+
+      // 2025年2月以前に遡ることは不可
+      if (year == 2025 && month == 2) {
+        this._prev.classList.add('--inactive');
+      } else {
+        this._prev.classList.remove('--inactive');
+      }
     }
     if (this._currentText) {
       this._currentText.textContent = `${year}${joint}${this._months[month]}`;

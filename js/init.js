@@ -5,7 +5,7 @@
  */
 
 
-import BusinessCalendar from './_businessCalendar.js';
-new BusinessCalendar({
+import PICCalendar from './_PICCalendar.js';
+new PICCalendar({
   url: 'https://test2.qwel.design/'
 });

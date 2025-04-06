@@ -25,20 +25,18 @@ function executeQuery($file, $sql, $options = []) {
   }
 }
 
-function fetchStatus($file, $year, $month) {
-  $sql = "SELECT * FROM t_status WHERE substr(date, 1, 7) = :date";
-  $options = [
-    ':date' => $year . '-' . sprintf('%02d', $month)
-  ];
+function fetchStatus($file) {
+  $sql = "SELECT * FROM t_status";
 
-  return executeQuery($file, $sql, $options);
+  return executeQuery($file, $sql);
 }
 
-function insertState($file, $date, $state) {
-  $sql = "INSERT INTO t_status(date, state) VALUES (:date, :state)";
+function insertState($file, $date, $state, $pic) {
+  $sql = "INSERT INTO t_status(date, state, pic) VALUES (:date, :state, :pic)";
   $options = [
     ':date' => $date,
-    ':state' => $state
+    ':state' => $state,
+    ':pic' => $pic
   ];
 
   return executeQuery($file, $sql, $options);

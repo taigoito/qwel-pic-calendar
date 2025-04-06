@@ -8,14 +8,9 @@ $method = $_GET['method'];
 if ($method === 'fetch') {
   // APIのアクセス許可
   header("Access-Control-Allow-Origin: *");
-  
-  $result;
 
-  // SQL文発行
-  $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-  $month = isset($_GET['month']) ? $_GET['month'] : date('n');
   // 実行
-  $result = fetchStatus($file, $year, $month);
+  $result = fetchStatus($file);
   
   // JSON出力
   echo json_encode($result, JSON_UNESCAPED_UNICODE);
@@ -29,8 +24,8 @@ if ($method === 'fetch') {
 
   // ステータスの挿入
   if ($method === 'insert') {
-    if (isset($_POST['date']) && isset($_POST['state'])) {
-      insertState($file, $_POST['date'], $_POST['state']); 
+    if (isset($_POST['date']) && isset($_POST['state']) && isset($_POST['pic'])) {
+      insertState($file, $_POST['date'], $_POST['state'], $_POST['pic']); 
     }
   
     return;

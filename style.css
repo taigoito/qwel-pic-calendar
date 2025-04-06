@@ -67,11 +67,16 @@ button, input, select, textarea {
   background: rgba(128, 255, 255, 0.3);
 }
 .calendar__mode {
+  margin-bottom: 0.75rem;
   text-align: right;
 }
-.calendar__mode select {
-  display: inline-block;
-  margin: 0.75rem;
+.calendar__mode label {
+  font-size: 0.875rem;
+}
+.calendar__mode input {
+  width: 6rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
 }
 .calendar__control {
   display: flex;
@@ -128,12 +133,9 @@ button, input, select, textarea {
   color: red;
 }
 .calendar__cell[data-state="0"] {
-  background: rgba(255, 128, 128, 0.5);
-}
-.calendar__cell[data-state="1"] {
   background: rgba(255, 255, 128, 0.5);
 }
-.calendar__cell[data-state="2"] {
+.calendar__cell[data-state="1"] {
   background: rgba(128, 255, 128, 0.5);
 }
 .calendar__value {
