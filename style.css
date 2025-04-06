@@ -59,7 +59,7 @@ button, input, select, textarea {
  * Calendar
  */
 .calendar {
-  width: min(100%, 35rem);
+  width: min(100%, 42rem);
   margin: 3rem auto;
   padding-bottom: 1.5rem;
 }
@@ -71,7 +71,7 @@ button, input, select, textarea {
 }
 .calendar__mode select {
   display: inline-block;
-  margin: 0 0.75rem;
+  margin: 0.75rem;
 }
 .calendar__control {
   display: flex;
@@ -87,13 +87,17 @@ button, input, select, textarea {
   font-size: 0.875rem;
   text-align: center;
 }
+.calendar__prev.--inactive, .calendar__next.--inactive {
+  opacity: 0.3;
+  cursor: default;
+}
 .calendar__wrap {
-  width: min(100%, 35rem);
+  width: min(100%, 42rem);
   margin: 0 auto;
   overflow: auto;
 }
 .calendar__view {
-  width: calc(clamp(46px, 6vw, 69px) * 7);
+  width: calc(clamp(3rem, 12vw, 6rem) * 7);
   border-collapse: collapse;
   border-spacing: 0;
   margin: 0 auto;
@@ -105,25 +109,39 @@ button, input, select, textarea {
   border-top: 1px solid #999999;
 }
 .calendar__view th, .calendar__view td {
-  width: clamp(46px, 6vw, 69px);
-  height: calc(clamp(46px, 6vw, 69px) * 3 / 4);
+  width: clamp(3rem, 12vw, 6rem);
+  height: calc(clamp(3rem, 12vw, 6rem) * 3 / 4);
   border-right: 1px solid #999999;
   text-align: center;
 }
 .calendar__view th:first-child, .calendar__view td:first-child {
   border-left: 1px solid #999999;
 }
-.calendar__view td.--holiday {
+.calendar__cell {
+  font-size: min(3.6vw, 87.5%);
+  vertical-align: baseline;
+}
+.calendar__cell.--done {
+  opacity: 0.7;
+}
+.calendar__cell.--holiday {
   color: red;
 }
-.calendar__view td[data-state="0"] {
+.calendar__cell[data-state="0"] {
   background: rgba(255, 128, 128, 0.5);
 }
-.calendar__view td[data-state="1"] {
+.calendar__cell[data-state="1"] {
   background: rgba(255, 255, 128, 0.5);
 }
-.calendar__view td[data-state="2"] {
+.calendar__cell[data-state="2"] {
   background: rgba(128, 255, 128, 0.5);
+}
+.calendar__value {
+  display: block;
+  width: 96%;
+  margin: 0 auto;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.85);
 }
 .calendar:not(.--startOnMon) th:first-child, .calendar:not(.--startOnMon) td:first-child {
   color: red;
@@ -136,4 +154,26 @@ button, input, select, textarea {
 }
 .calendar.--startOnMon th:nth-child(6), .calendar.--startOnMon td:nth-child(6) {
   color: blue;
+}
+.calendar__save {
+  display: block;
+  width: 9rem;
+  height: 3rem;
+  margin: 1.5rem auto;
+  border: 0;
+  border-radius: 6px;
+  background-color: #cccccc;
+  color: #000000;
+  line-height: 3rem;
+  text-align: center;
+  opacity: 0.7;
+  cursor: default;
+  transition: opacity 0.25s ease-in-out;
+}
+.calendar__save:not(.--inactive) {
+  opacity: 1;
+  cursor: pointer;
+}
+.calendar__save:not(.--inactive):hover {
+  opacity: 0.7;
 }

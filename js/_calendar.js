@@ -44,20 +44,23 @@ export default class Calendar {
       this._elem.classList.add('--startOnMon');
     }
 
-    // 現在年月を取得
-    const today = new Date();
-    this.year = today.getFullYear();
-    this.month = today.getMonth();
+    // 今日を定義
+    this.today = new Date();
 
-    // オプション
+    // 現在日付をオプションから修正
     this.options = options;
-    let month = options.month ? options.month % 12 : 0;
-    let year = options.year ? options.year : 0;
-    year += (this.month + month > 11) ? 1 : 0;
-
-    // 年月を修正
-    this.month = (this.month + month) % 12;
-    this.year += year;
+    const year = options.year ? options.year : 0;
+    const month = options.month ? options.month : 0;
+    const day = options.day ? options.day : 0;
+    let baseDate = new Date();
+    baseDate.setFullYear(baseDate.getFullYear() + year);
+    baseDate.setMonth(baseDate.getMonth() + month);
+    baseDate.setDate(baseDate.getDate() + day);
+    
+    // 基準日付を定義
+    this.baseDate = baseDate;
+    this.year = this.baseDate.getFullYear();
+    this.month = this.baseDate.getMonth();
     
     // 休日データを取得
     this.holidays = this._fetchHolidays();
@@ -73,7 +76,6 @@ export default class Calendar {
     const url = 'https://holidays-jp.github.io/api/v1/date.json';
     const res = await fetch(`${url}`);
     return await res.json();
-
   }
 
   _handleEvents() {
@@ -82,23 +84,19 @@ export default class Calendar {
     // 前月
     this._prev.addEventListener('click', (event) => {
       event.preventDefault();
-      this.month--;
-      if (this.month < 0) {
-        this.year--;
-        this.month = this._months.length - 1;
-      }
-      this.makeCalendar(this.year, this.month);
+      this.baseDate.setMonth(this.baseDate.getMonth() - 1);
+      this.year = this.baseDate.getFullYear();
+      this.month = this.baseDate.getMonth();
+      this.makeCalendar(this.year, this.month, false);
     });
 
     // 次月
     this._next.addEventListener('click', (event) => {
       event.preventDefault();
-      this.month++;
-      if (this.month > this._months.length - 1) {
-        this.year++;
-        this.month = 0;
-      }
-      this.makeCalendar(this.year, this.month);
+      this.baseDate.setMonth(this.baseDate.getMonth() + 1);
+      this.year = this.baseDate.getFullYear();
+      this.month = this.baseDate.getMonth();
+      this.makeCalendar(this.year, this.month, true);
     });
   }
 
@@ -163,18 +161,21 @@ export default class Calendar {
       for (let i = 0; i < 7; i++) {
         //一日の列を作成
         const td = document.createElement('td');
+        td.classList.add('calendar__cell');
         if (i < startDay && j === 0 || dayCount > endDayCount) {
           // 一週目で、初日の曜日に達するまでは空白
           // もしくは末日の日にちに達してからは空白
           td.innerHTML = '&nbsp;';
         } else {
-          // 日にちを記載
-          td.innerHTML = `<span>${dayCount}</span>`;
+          // 日にち・予定を記載する要素を挿入
+          td.innerHTML = `<span class="calendar__day">${dayCount}</span><span class="calendar__value"></span>`;
           // 日にち・曜日データをセット
           const date = this._parseDate(year, month, dayCount);
           td.dataset.date = date;
           const week = i;
           td.dataset.week = week;
+          // 過去クラスを付与
+          if (new Date(date) < this.today) td.classList.add('--done');
           // 祝日クラスを付与
           if (date in holidays) {
             td.classList.add('--holiday');
