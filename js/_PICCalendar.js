@@ -134,10 +134,10 @@ export default class PICCalendar extends Calendar {
 
   // 最終保存日と最終担当者を保存
   _saveData() {
-    const eventDate = document.querySelectorAll('[data-state="1"]');
+    const eventDate = document.querySelectorAll('[data-state="1"][data-is-saved="false"]');
     eventDate.forEach((ed) => {
       const date = new Date(ed.dataset.date);
-      if (this.latestDate < date && date < this.today) {
+      if (date < this.today) {
         // データの更新をPUT
         const url = this.options.url;
         const date = ed.dataset.date;
@@ -184,14 +184,17 @@ export default class PICCalendar extends Calendar {
       for (let i = latestMonth; i < baseMonth; i++) {
         pic += this._countEventDateInMonth(this.year, i);
       }
-      return pic % len + 1;
-    } else if (latestMonth == baseMonth) {
-      // 最終保存日が今月
-      return pic % len + 1; // 最終担当者の次担当者から開始
-    } else {
-      // 最終保存日が翌月移行 (過去を参照している)
-      return 0; // インデックスは不要
+    } else if (latestMonth > baseMonth) {
+      // 最終保存日が翌月以降 (過去を参照している)
+      // 暫定対応 (月内の担当者が1名も保存去れていない場合にエラー)
+      const eventDate = document.querySelectorAll('[data-state="1"][data-is-saved="true"]');
+      if (eventDate && eventDate > 0) {
+        eventDate.forEach((ed) => {
+          pic = ed.dataset.pic - 0;
+        });
+      }
     }
+    return pic % len + 1; // 最終担当者の次担当者から開始
   }
 
   _countEventDateInMonth(year, month) {
